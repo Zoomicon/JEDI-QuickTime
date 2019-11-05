@@ -846,5 +846,59 @@ begin
  result:=myString;
 end;
 
+//////////
+//
+// QTUtils_DeleteAllReferencesToTrack
+// Delete all existing track references to the specified track.
+//
+//////////
+
+(*
+function DeleteAllReferencesToTrack(theTrack:Track):OSErr;
+begin
+  Movie        myMovie = NULL;
+  Track        myTrack = NULL;
+  long        myTrackCount = 0L;
+  long        myTrRefCount = 0L;
+  long        myTrackIndex;
+  long        myTrRefIndex;
+  OSErr        myErr = noErr;
+
+  myMovie = GetTrackMovie(theTrack);
+  if (myMovie == NULL)
+    return(paramErr);
+
+  // iterate thru all the tracks in the movie (that are different from the specified track)
+  myTrackCount = GetMovieTrackCount(myMovie);
+  for (myTrackIndex = 1; myTrackIndex <= myTrackCount; myTrackIndex++) {
+    myTrack = GetMovieIndTrack(myMovie, myTrackIndex);
+    if ((myTrack != NULL) && (myTrack != theTrack)) {
+      OSType    myType = 0L;
+  
+      // iterate thru all track reference types contained in the current track
+      myType = GetNextTrackReferenceType(myTrack, myType);
+      while (myType != 0L) {
+
+        // iterate thru all track references of the current type;
+        // note that we count down to 1, since DeleteTrackReference will cause
+        // any higher-indexed track references to be renumbered
+        myTrRefCount = GetTrackReferenceCount(myTrack, myType);
+        for (myTrRefIndex = myTrRefCount; myTrRefIndex >= 1; myTrRefIndex--) {
+          Track  myRefTrack = NULL;
+
+          myRefTrack = GetTrackReference(myTrack, myType, myTrRefIndex);
+          if (myRefTrack == theTrack)
+            myErr = DeleteTrackReference(myTrack, myType, myTrRefIndex);
+        }
+
+        myType = GetNextTrackReferenceType(myTrack, myType);
+      }
+    }
+  }
+
+  return(myErr);
+}
+*)
+
 end.
 

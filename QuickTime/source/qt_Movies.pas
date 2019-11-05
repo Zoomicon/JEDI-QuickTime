@@ -83,6 +83,8 @@
           -           Changed last parameter of "QTFindChildByID" to be of type
                       "longPtr" instead of a "var" parameter of type "long" so
                       that one can pass "nil" for that parameter
+22Dec2009 - birbilis: fix: renamed "HandlerErrorComponentResult" to "HandlerError"
+23Dec2009 - birbilis: added "TimeCode64MediaType"                      
 *)
 
 unit qt_Movies;
@@ -143,6 +145,7 @@ interface
   MPEGMediaType              =(((ord('M') shl 8 +ord('P'))shl 8 +ord('E'))shl 8 +ord('G')); {'MPEG'}
   MusicMediaType             =(((ord('m') shl 8 +ord('u'))shl 8 +ord('s'))shl 8 +ord('i')); {'musi'}
   TimeCodeMediaType          =(((ord('t') shl 8 +ord('m'))shl 8 +ord('c'))shl 8 +ord('d')); {'tmcd'}
+  TimeCode64MediaType        =(((ord('t') shl 8 +ord('c'))shl 8 +ord('6'))shl 8 +ord('4')); {'tc64'} //64-bit time code media
   SpriteMediaType            =(((ord('s') shl 8 +ord('p'))shl 8 +ord('r'))shl 8 +ord('t')); {'sprt'}
   FlashMediaType             =(((ord('f') shl 8 +ord('l'))shl 8 +ord('s'))shl 8 +ord('h')); {'flsh'}
   MovieMediaType             =(((ord('m') shl 8 +ord('o'))shl 8 +ord('o'))shl 8 +ord('v')); {'moov'}
@@ -598,7 +601,7 @@ interface
   DataHandler=ComponentInstance;
   MediaHandlerComponent=Component;
   DataHandlerComponent=Component;
-  HandlerErrorComponentResult=ComponentResult;
+  HandlerError=ComponentResult;
 
  (* TimeBase equates *)
  type
@@ -700,7 +703,7 @@ interface
 
 (* obtaining direct reference to atom data *)
  function QTLockContainer(container:QTAtomContainer):OSErr; cdecl; external 'qtmlClient.dll';
- function QTGetAtomDataPtr(container:QTAtomContainer;atom:QTAtom;var dataSize:long;var atomData:Ptr):OSErr; cdecl; external 'qtmlClient.dll';
+ function QTGetAtomDataPtr(container:QTAtomContainer;atom:QTAtom; dataSize:longPtr;var atomData:Ptr):OSErr; cdecl; external 'qtmlClient.dll';
  function QTUnlockContainer(container:QTAtomContainer):OSErr; cdecl; external 'qtmlClient.dll';
 
 (*

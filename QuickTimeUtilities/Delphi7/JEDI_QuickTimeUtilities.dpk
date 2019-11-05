@@ -33,7 +33,6 @@ contains
   QTVRUtils in '..\source\QTVRUtils.pas',
   QTime in '..\source\QTime.pas',
   QTUtils in '..\source\QTUtils.pas',
-  Box3DSupport in '..\source\Box3DSupport.pas',
   JEDI_QuickTime_Utils in '..\source\JEDI_QuickTime_Utils.pas',
   QTURL in '..\source\QTURL.pas',
   QTStep in '..\source\QTStep.pas',

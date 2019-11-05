@@ -1,54 +1,59 @@
 //TO DO: check if StandardFileReply works OK now that changed Boolean type again
 
-{************************************************************************}
-{                                                       	         }
-{       Borland Delphi Runtime Library                  		 }
-{       QuickTime interface unit                                         }
-{ 									 }
-{ Portions created by Apple Computer, Inc. are 				 }
-{ Copyright (C) ????-1998 Apple Computer, Inc.. 			 }
-{ All Rights Reserved. 							 }
-{ 								         }
-{ The original file is: MacTypes.h, released dd Mmm yyyy. 		 }
-{ The original Pascal code is: qt_MacTypes.pas, released 14 May 2000. 	 }
-{ The initial developer of the Pascal code is George Birbilis            }
-{ (birbilis@cti.gr).                     				 }
-{ 									 }
-{ Portions created by George Birbilis are    				 }
-{ Copyright (C) 1998-2002 George Birbilis 				 }
-{ 									 }
-{       Obtained through:                               		 }
-{ 									 }
-{       Joint Endeavour of Delphi Innovators (Project JEDI)              }
-{									 }
-{ You may retrieve the latest version of this file at the Project        }
-{ JEDI home page, located at http://delphi-jedi.org                      }
-{									 }
-{ The contents of this file are used with permission, subject to         }
-{ the Mozilla Public License Version 1.1 (the "License"); you may        }
-{ not use this file except in compliance with the License. You may       }
-{ obtain a copy of the License at                                        }
-{ http://www.mozilla.org/MPL/MPL-1.1.html 	                         }
-{ 									 }
-{ Software distributed under the License is distributed on an 	         }
-{ "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or         }
-{ implied. See the License for the specific language governing           }
-{ rights and limitations under the License. 				 }
-{ 									 }
-{************************************************************************}
+(************************************************************************
+                                                       	         
+       Borland Delphi Runtime Library
+       QuickTime interface unit
 
-//07Mar1999 - birbilis: last known change before donation to Delphi-JEDI
-//14May2000 - birbilis: donated to Delphi-JEDI
-//21Jan2002 - birbilis: added FOUR_CHAR_CODE type
-//02Feb2002 - birbilis: removed again FOUR_CHAR_CODE type and added
-//                      FOUR_CHAR_CODE function instead
-//21May2002 - birbilis: added widePtr and OSTypePtr types
-//23May2002 - birbilis: added all String types from QT5.0.1 SDK
-//18Jun2002 - birbilis: almost finished, based on QT5.0.1 SDK
-//30Jun2002 - birbilis: added "Str255Ptr" type
-// 6Jul2002 - birbilis: changed all "char" to "AnsiChar"
-//          -           changed all "ConstStrXXParam"
-//          -           added "SInt64Ptr"
+ Portions created by Apple Computer, Inc. are
+ Copyright (C) ????-1998 Apple Computer, Inc..
+ All Rights Reserved.
+
+ The original file is: MacTypes.h, released dd Mmm yyyy.
+ The original Pascal code is: qt_MacTypes.pas, released 14 May 2000.
+ The initial developer of the Pascal code is George Birbilis
+ (birbilis@cti.gr).
+
+ Portions created by George Birbilis are
+ Copyright (C) 1998-2009 George Birbilis
+
+       Obtained through:
+
+       Joint Endeavour of Delphi Innovators (Project JEDI)
+
+ You may retrieve the latest version of this file at the Project
+ JEDI home page, located at http://delphi-jedi.org
+
+ The contents of this file are used with permission, subject to
+ the Mozilla Public License Version 1.1 (the "License"); you may
+ not use this file except in compliance with the License. You may
+ obtain a copy of the License at
+ http://www.mozilla.org/MPL/MPL-1.1.html
+
+ Software distributed under the License is distributed on an 	         
+ "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or         
+ implied. See the License for the specific language governing           
+ rights and limitations under the License. 				 
+
+************************************************************************)
+
+(******
+ History:
+  07Mar1999 - birbilis: last known change before donation to Delphi-JEDI
+  14May2000 - birbilis: donated to Delphi-JEDI
+  21Jan2002 - birbilis: added FOUR_CHAR_CODE type
+  02Feb2002 - birbilis: removed again FOUR_CHAR_CODE type and added
+                        FOUR_CHAR_CODE function instead
+  21May2002 - birbilis: added widePtr and OSTypePtr types
+  23May2002 - birbilis: added all String types from QT5.0.1 SDK
+  18Jun2002 - birbilis: almost finished, based on QT5.0.1 SDK
+  30Jun2002 - birbilis: added "Str255Ptr" type
+   6Jul2002 - birbilis: changed all "char" to "AnsiChar"
+            -           changed all "ConstStrXXParam"
+            -           added "SInt64Ptr"
+  02Oct2009 - birbilis: added "UInt8Ptr", "SInt8Ptr", "SInt16Ptr", "UInt16Ptr",
+                        "SInt32Ptr", "UInt32Ptr" and "UInt64Ptr"
+******)
 
 (*
      File:       MacTypes.h
@@ -90,11 +95,22 @@ interface
 *********************************************************************************)
  type
   UInt8=byte;      //unsigned 8-bit integer
+  UInt8Ptr=^UInt8;
+
   SInt8=shortInt;  //signed 8-bit integer
+  SInt8Ptr=^SInt8;
+
   SInt16=short; //signed 16-bit integer
+  SInt16Ptr=^SInt16;
+
   UInt16=word;  //unsigned 16-bit integer
+  UInt16Ptr=^UInt16;
+
   SInt32=long;  //signed 32-bit integer
+  SInt32Ptr=^SInt32;
+
   UInt32=cardinal; //unsigned 32-bit integer
+  UInt32Ptr=^UInt32;
 
 {$ifdef TARGET_RT_BIG_ENDIAN}
 
@@ -137,10 +153,13 @@ interface
 
  type
   //SInt64=Int64;
-  //UInt64=Int64; //problem: Delphi has no unsigned Int64 type!!!
+  //UInt64=Int64; //this would be problematic: Delphi has no unsigned Int64 type!!!
+
   SInt64=wide;
   SInt64Ptr=^SInt64;
+
   UInt64=UnsignedWide;
+  UInt64Ptr=^UInt64;
 
 (********************************************************************************
 
@@ -156,10 +175,13 @@ interface
  type
   Fixed=long;
   FixedPtr=^Fixed;
+
   Fract=long;
   FractPtr=^Fract;
+
   UnsignedFixed=unsigned_long;
   UnsignedFixedPtr=^UnsignedFixed;
+
   ShortFixed=short;
   ShortFixedPtr=^ShortFixed;
 

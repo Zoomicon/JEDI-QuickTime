@@ -660,10 +660,10 @@ begin
  VRObject_ConvertFloatToBigEndian(@myObjectSampleData.frameRate);
 
  //myObjectSampleData.animationSettings := EndianU32_NtoB(kDefaultAnimationSettings);
- myObjectSampleData.animationSettings := EndianU32_NtoB(animationSettings); //birbilis
+ myObjectSampleData.animationSettings := EndianU32_NtoB(animationSettings); //birbilis: using command-line optional param, which defaults to kDefaultAnimationSettings
 
  //myObjectSampleData.controlSettings := EndianU32_NtoB(kDefaultControlSettings);
- myObjectSampleData.controlSettings := EndianU32_NtoB(controlSettings); //birbilis
+ myObjectSampleData.controlSettings := EndianU32_NtoB(controlSettings); //birbilis: using command-line optional param, which defaults to kDefaultControlSettings
 
  // insert the object sample atom into the object sample atom container
  myErr := QTInsertChild(myObjectSample, kParentAtomIsContainer, kQTVRObjectInfoAtomType, 1, 1, sizeof(QTVRObjectSampleAtom), @myObjectSampleData, nil);

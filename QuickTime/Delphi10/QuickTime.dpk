@@ -26,7 +26,8 @@ package QuickTime;
 {$IMPLICITBUILD ON}
 
 requires
-  vcl;
+  vcl,
+  rtl;
 
 contains
   qt_StandardFile in '..\source\qt_StandardFile.pas',
@@ -70,6 +71,7 @@ contains
   qt_Aliases in '..\source\qt_Aliases.pas',
   qt_FixMath in '..\source\qt_FixMath.pas',
   qt_Finder in '..\source\qt_Finder.pas',
-  qt_QD3DAcceleration in '..\source\qt_QD3DAcceleration.pas';
+  qt_QD3DAcceleration in '..\source\qt_QD3DAcceleration.pas',
+  qt_QuickDrawText in '..\source\qt_QuickDrawText.pas';
 
 end.

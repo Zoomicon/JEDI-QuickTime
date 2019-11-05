@@ -9,7 +9,15 @@ Porting history:
            -           Ported "Point3DToPanAngle", "GetVRWorldHeaderAtomData",
                        "GetHotSpotAtomData", "GetNodeHeaderAtomData",
                        "GetControllerBarHeight"
+ 02Oct2009 - birbilis: Ported "GetHotSpotName", "GetDefaultNodeID"
+                       and "GetSceneFlags"
+ 24Dec2009 - birbilis: Ported "AddStr255ToAtomContainer", optimized other code
+           - birbilis: Modified "AddStr255ToAtomContainer" so it doesn't add a
+                       null byte to the string in the atom container (Apple's fix)
+           - birbilis: Ported "PanAngleToPoint3D" (by Bryce Wolfson, Apple's addition)
 *)
+
+//TODO: Fully port "GetHotSpotCount" and other commented-out code
 
 interface
 
@@ -30,6 +38,8 @@ interface
 //	   <1>	 	11/27/96	rtm		first file
 //
 //////////
+
+//TODO: see newer changes at http://www.koders.com/c/fid63F96F23BAABB8B68C57C17704B4BDBD0F649D62.aspx
 
  uses
   C_Types,
@@ -109,7 +119,7 @@ interface
  function GetNodeHeaderAtomData(theInstance:QTVRInstance;theNodeID:UInt32;theNodeHdrPtr:QTVRNodeHeaderAtomPtr):OSErr;
  function GetHotSpotAtomData(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotID:UInt32;theHotSpotInfoPtr:QTVRHotSpotInfoAtomPtr):OSErr;
  function GetStringFromAtom(theContainer:QTAtomContainer;theParent:QTAtom;theID:QTAtomID):PChar;
- function AddStr255ToAtomContainer(theContainer:QTAtomContainer;theParent:QTAtom;theString:Str255;theID:QTAtomID):OSErr;
+ function AddStr255ToAtomContainer(theContainer:QTAtomContainer;theParent:QTAtom;theString:Str255;var theID:QTAtomID):OSErr;
  function GetDefaultNodeID(theInstance:QTVRInstance):UInt32;
  function GetSceneFlags(theInstance:QTVRInstance):UInt32;
 (*
@@ -123,17 +133,20 @@ interface
 *)
  function GetHotSpotCount(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotIDs:Handle):UInt32;
  function GetHotSpotIDByIndex(theInstance:QTVRInstance;theHotSpotIDs:Handle;theIndex:UInt32):UInt32;
- function GetHotSpotType(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotID:UInt32;theHotSpotType:OSType):OSErr;
+ function GetHotSpotType(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotID:UInt32;var theHotSpotType:OSType):OSErr;
  function GetHotSpotName(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotID:UInt32):PChar;
  function Point3DToPanAngle(theX:float;theY:float;theZ:float):float;
  function Point3DToTiltAngle(theX:float;theY:float;theZ:float):float;
+ procedure PanAngleToPoint3D(thePanAngle:float; var theX,theZ:float);
  function StandardEnteringNodeProc(theInstance:QTVRInstance;fromNodeID:long;toNodeID:long;var theCancel:Boolean;theMC:MovieController):OSErr; pascal; //in Delphi3 pascal isn't the default calling convention {PASCAL_RTN}
  function StandardLeavingNodeProc(theInstance:QTVRInstance;fromNodeID:long;toNodeID:long;var theCancel:Boolean;theMC:MovieController):OSErr; pascal; //in Delphi3 pascal isn't the default calling convention {PASCAL_RTN}
 
 implementation
  uses
+  SysUtils, //AllocMem (for Delphi6)
   Math,
   QTUtils,
+  qt_MacMemory,
   qt_Errors;
 
 //////////
@@ -251,7 +264,6 @@ var myVersion:long;
     myErr:OSErr;
 begin
  myVersion := long(0);
- //myErr := noErr;
 
  myErr := Gestalt(gestaltQTVRMgrVers, myVersion);
  if (myErr = noErr) then
@@ -797,8 +809,6 @@ var myVRWorld:QTAtomContainer;
     myAtom:QTAtom;
     myErr:OSErr;
 begin
- //myErr := noErr;
-
  // get the VR world
  myErr := QTVRGetVRWorld(theInstance, myVRWorld);
  if (myErr <> noErr) then
@@ -831,8 +841,6 @@ var myNodeInfo:QTAtomContainer;
     myAtom:QTAtom;
     myErr:OSErr;
 begin
- //myErr := noErr;
-
  // get the node information atom container for the specified node
  myErr := QTVRGetNodeInfo(theInstance, theNodeID, myNodeInfo);
  if (myErr <> noErr) then
@@ -867,8 +875,6 @@ var myNodeInfo:QTAtomContainer;
     myHSAtom:QTAtom;
     myAtom:QTAtom;
 begin
-//myErr := noErr;
-
  // (1) the node information atom container contains a *hot spot parent atom*;
  // (2) the hot spot parent atom contains one or more *hot spot atoms*;
  // (3) the hot spot atom contains two children, a *general hot spot information atom*
@@ -919,38 +925,45 @@ end;
 //////////
 
 function GetStringFromAtom(theContainer:QTAtomContainer;theParent:QTAtom;theID:QTAtomID):PChar;
+var
+	myStringAtomPtr:QTVRStringAtomPtr;
+	myNameAtom:QTAtom;
+	myString:pchar;
+ 	myErr:OSErr;
+	myLength:UInt16;
 begin
-(*
-	QTVRStringAtomPtr	myStringAtomPtr := nil;
-	QTAtom				myNameAtom;
-	char				*myString := nil;
- 	OSErr				myErr := noErr;
+	if (theContainer = nil) then
+    begin
+		result:=nil;
+    exit;
+    end;
 
-	if (theContainer = nil)
-		result:=(myString);
-		
+  myStringAtomPtr:=nil;
+  myString:=nil;
+
 	QTLockContainer(theContainer);
 
 	myNameAtom := QTFindChildByID(theContainer, theParent, kQTVRStringAtomType, theID, nil);
-	if (myNameAtom <> 0) then begin
-		myErr := QTGetAtomDataPtr(theContainer, myNameAtom, nil, (Ptr * )&myStringAtomPtr);
-		if ((myErr = noErr) and (myStringAtomPtr <> nil)) begin
-			UInt16		myLength;
+	if (myNameAtom <> 0) then
+    begin
+		myErr := QTGetAtomDataPtr(theContainer, myNameAtom, nil, Ptr(myStringAtomPtr));
+		if ((myErr = noErr) and (myStringAtomPtr <> nil)) then
+      begin
+			myLength := EndianU16_BtoN(myStringAtomPtr^.stringLength);
+			if (myLength > 0) then
+        begin
+				myString := AllocMem(myLength + 1); //C's "malloc" is "AllocMem" in Delphi
+				if (myString <> nil) then
+          begin
+					move(myString, myStringAtomPtr^.theString, myLength); //C's "memcpy" is roughly equivalent to "move" in Delphi
+					myString[myLength] := #0; //C's '\0' is #0 in Delphi;
+  				end;
+	  		end;
+		  end;
+  	end;
 
-			myLength := EndianU16_BtoN(myStringAtomPtr->stringLength);
-			if (myLength > 0) begin
-				myString := malloc(myLength + 1);
-				if (myString <> nil) begin
-					memcpy(myString, myStringAtomPtr->theString, myLength);
-					myString[myLength] := '\0';
-				end;
-			end;			
-		end;
-	end;
-	
 	QTUnlockContainer(theContainer);
 	result:=(myString);
-*)
 end;
 
 
@@ -961,39 +974,41 @@ end;
 //
 //////////
 
-function AddStr255ToAtomContainer(theContainer:QTAtomContainer;theParent:QTAtom;theString:Str255;theID:QTAtomID):OSErr;
+function AddStr255ToAtomContainer(theContainer:QTAtomContainer;theParent:QTAtom;theString:Str255;var theID:QTAtomID):OSErr;
+var
+ myErr:OSErr;
+ myStringAtom:QTAtom;
+ mySize:UInt16;
+ myStringAtomPtr:QTVRStringAtomPtr;
 begin
-(*
-	OSErr					myErr := noErr;
-
-	*theID := 0;				// initialize the returned atom ID
-
-	if ((theContainer = nil) or (theParent = 0))
+	if ((theContainer = nil) or (theParent = 0)) then
+    begin
 		result:=(paramErr);
-		
-	if (theString[0] <> 0) begin
-		QTAtom				myStringAtom;
-		UInt16				mySize;
-		QTVRStringAtomPtr	myStringAtomPtr := nil;
-		
-		mySize := sizeof(QTVRStringAtom) - 4 + theString[0] + 1;
-		myStringAtomPtr := (QTVRStringAtomPtr)NewPtrClear(mySize);
-		
-		if (myStringAtomPtr <> nil) begin
-			myStringAtomPtr->stringUsage := EndianU16_NtoB(1);
-			myStringAtomPtr->stringLength := EndianU16_NtoB(theString[0]);
-			BlockMove(theString + 1, myStringAtomPtr->theString, theString[0]);
-			myStringAtomPtr->theString[theString[0]] := '\0';
-			myErr := QTInsertChild(theContainer, theParent, kQTVRStringAtomType, 0, 0, mySize, (Ptr)myStringAtomPtr, &myStringAtom);
-			DisposePtr((Ptr)myStringAtomPtr);
-			
-			if (myErr = noErr)
+    exit;
+    end;
+
+	theID := 0;				// initialize the returned atom ID
+
+	myErr := noErr;
+	if (byte(theString[0]) <> 0) then
+    begin
+		mySize := sizeof(QTVRStringAtom) - 4 + byte(theString[0]);
+		myStringAtomPtr := QTVRStringAtomPtr(NewPtrClear(mySize));
+
+		if (myStringAtomPtr <> nil) then
+      begin
+			myStringAtomPtr^.stringUsage := EndianU16_NtoB(1);
+			myStringAtomPtr^.stringLength := EndianU16_NtoB(byte(theString[0]));
+			BlockMove(@theString[1], @myStringAtomPtr^.theString, byte(theString[0]));
+			myErr := QTInsertChild(theContainer, theParent, kQTVRStringAtomType, 0, 0, mySize, Ptr(myStringAtomPtr), @myStringAtom);
+			DisposePtr(Ptr(myStringAtomPtr));
+
+			if (myErr = noErr) then
 				QTGetAtomTypeAndID(theContainer, myStringAtom, nil, theID);
 		end;
 	end;
-	
-	result:=(myErr);
-*)
+
+	result:=myErr;
 end;
 
 
@@ -1005,18 +1020,18 @@ end;
 //////////
 
 function GetDefaultNodeID(theInstance:QTVRInstance):UInt32;
+var
+	myVRWorldHeader:QTVRWorldHeaderAtom;
+	myNodeID:UInt32;
+	myErr:OSErr;
 begin
-(*
-	QTVRWorldHeaderAtom	 	myVRWorldHeader;
-	UInt32					myNodeID := kQTVRCurrentNode;
-	OSErr					myErr := noErr;
-		
-	myErr := GetVRWorldHeaderAtomData(theInstance, &myVRWorldHeader);
-	if (myErr = noErr)
-		myNodeID := EndianU32_BtoN(myVRWorldHeader.defaultNodeID);
+	myErr := GetVRWorldHeaderAtomData(theInstance, @myVRWorldHeader);
+	if (myErr = noErr) then
+		myNodeID := EndianU32_BtoN(myVRWorldHeader.defaultNodeID)
+  else
+  	myNodeID := kQTVRCurrentNode;
 
 	result:=(myNodeID);
-*)
 end;
 
 
@@ -1029,18 +1044,15 @@ end;
 //////////
 
 function GetSceneFlags(theInstance:QTVRInstance):UInt32;
+var
+	myVRWorldHeader:QTVRWorldHeaderAtom;
+	myErr:OSErr;
 begin
-(*
-	QTVRWorldHeaderAtom	 	myVRWorldHeader;
-	UInt32					myFlags := 0L;
-	OSErr					myErr;
-		
-	myErr := GetVRWorldHeaderAtomData(theInstance, &myVRWorldHeader);
-	if (myErr = noErr)
-		myFlags := EndianU32_BtoN(myVRWorldHeader.vrWorldFlags);
-
-	result:=(myFlags);
-*)
+	myErr := GetVRWorldHeaderAtomData(theInstance, @myVRWorldHeader);
+	if (myErr = noErr) then
+		result := EndianU32_BtoN(myVRWorldHeader.vrWorldFlags)
+  else
+    result := 0;
 end;
 
 (*
@@ -1098,25 +1110,23 @@ var
  myNumNodes:UInt32;
  myErr:OSErr;
 begin
- myNumNodes:=0;
- //myErr := noErr;
-
  // get the VR world
  myErr := QTVRGetVRWorld(theInstance, myVRWorld);
- if (myErr <> noErr) then
+ if (myErr = noErr) then
+  result:=0
+ else
   begin
-  result:=(myNumNodes);
-  exit;
+  // get the node parent atom, whose children contain info about all nodes in the scene
+  myNodeParentAtom := QTFindChildByIndex(myVRWorld, kParentAtomIsContainer, kQTVRNodeParentAtomType, 1, nil);
+  if (myNodeParentAtom <> 0) then  // now count the node ID children of the node parent atom, which is the number of nodes in the scene
+   myNumNodes := QTCountChildrenOfType(myVRWorld, myNodeParentAtom, kQTVRNodeIDAtomType)
+  else
+   myNumNodes := 0;
+
+  QTDisposeAtomContainer(myVRWorld);
+
+  result := myNumNodes;
   end;
-
- // get the node parent atom, whose children contain info about all nodes in the scene
- myNodeParentAtom := QTFindChildByIndex(myVRWorld, kParentAtomIsContainer, kQTVRNodeParentAtomType, 1, nil);
- if (myNodeParentAtom <> 0) then  // now count the node ID children of the node parent atom, which is the number of nodes in the scene
-  myNumNodes := QTCountChildrenOfType(myVRWorld, myNodeParentAtom, kQTVRNodeIDAtomType);
-
- QTDisposeAtomContainer(myVRWorld);
-
- result:=(myNumNodes);
 end;
 
 (*
@@ -1237,64 +1247,69 @@ end;
 //////////
 
 function GetHotSpotCount(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotIDs:Handle):UInt32;
+type
+ UInt32Array=array[0..0] of UInt32; //could also say "array of UInt32", but keeping for backwards compatibility
+var
+  myIndex:short;
+  //myAtom:QTAtom;
+  myID:QTAtomID;
+	myIDPtr:^UInt32Array;
+	myNodeInfo:QTAtomContainer;
+	myHSParentAtom:QTAtom;
+	myNumHotSpots:UInt32;
+  myErr:OSErr;
+  myHState:SignedByte;
+  mySize:Size;
 begin
-(*
-	QTAtomContainer			myNodeInfo;
-	QTAtom					myHSParentAtom := 0;
-	UInt32					myNumHotSpots := 0;
-	OSErr					myErr := noErr;
-	
-	// get the node information atom container for the current node
-	myErr := QTVRGetNodeInfo(theInstance, theNodeID, &myNodeInfo);
-	
-	// get the hot spot parent atom
-	if (myErr = noErr)
-		myHSParentAtom := QTFindChildByID(myNodeInfo, kParentAtomIsContainer, kQTVRHotSpotParentAtomType, 1, nil);
-		
-	if (myHSParentAtom <> 0) begin
-		SignedByte			myHState;
-		Size				mySize;
+	myHSParentAtom := 0;
+	myNumHotSpots := 0;
 
+	// get the node information atom container for the current node
+	myErr := QTVRGetNodeInfo(theInstance, theNodeID, myNodeInfo);
+
+	// get the hot spot parent atom
+	if (myErr = noErr) then
+		myHSParentAtom := QTFindChildByID(myNodeInfo, kParentAtomIsContainer, kQTVRHotSpotParentAtomType, 1, nil);
+
+	if (myHSParentAtom <> 0) then
+    begin
 		// get the number of hot spots in the current node
 		myNumHotSpots := QTCountChildrenOfType(myNodeInfo, myHSParentAtom, kQTVRHotSpotAtomType);
-		
+
 		// now pass back a list of the hot spot IDs;
 		// if theHotSpotIDs is nil on entry, we assume the caller doesn't want this information
-		if (theHotSpotIDs <> nil) begin
-		
+		if (theHotSpotIDs <> nil) then
+      begin
+
 			// unlock the handle, if it's locked (so that we can resize it)
 			myHState := HGetState(theHotSpotIDs);
-			if (myHState & 0x80)			// 0x80 = the block-is-locked bit in the SignedByte returned by HGetState
+			if (myHState and $80 <>0) then			// $80 = the block-is-locked bit in the SignedByte returned by HGetState
 				HUnlock(theHotSpotIDs);
 
 			// resize the handle to the appropriate size
 			mySize := sizeof(UInt32) * myNumHotSpots;
 			SetHandleSize(theHotSpotIDs, mySize);
-			
+
 			// restore the original handle state
 			HSetState(theHotSpotIDs, myHState);
-			
+
 			// make sure we actually did resize the handle
-			if (GetHandleSize(theHotSpotIDs) = mySize) begin
-				short			myIndex;
-				QTAtom			myAtom;
-				QTAtomID		myID;
-				UInt32			*myIDPtr;
-				
-				myIDPtr := (UInt32 * )*theHotSpotIDs;
+			if (GetHandleSize(theHotSpotIDs) = mySize) then
+        begin
+        myIDPtr := @theHotSpotIDs;
 
 				// loop thru all the hot spots to get their IDs
-				for (myIndex := 1; myIndex <= (short)myNumHotSpots; myIndex++) begin
-					myAtom := QTFindChildByIndex(myNodeInfo, myHSParentAtom, kQTVRHotSpotAtomType, myIndex, &myID);
-					myIDPtr[myIndex - 1] := (UInt32)myID;
-				end
+				for myIndex:=1 to short(myNumHotSpots) do
+          begin
+					{myAtom := }QTFindChildByIndex(myNodeInfo, myHSParentAtom, kQTVRHotSpotAtomType, myIndex, @myID);
+					myIDPtr[myIndex - 1] := UInt32(myID);
+  				end
 			end;
 		end;
 	end;
-	
+
 	QTDisposeAtomContainer(myNodeInfo);
 	result:=(myNumHotSpots);
-*)
 end;
 
 
@@ -1307,25 +1322,33 @@ end;
 //////////
 
 function GetHotSpotIDByIndex(theInstance:QTVRInstance;theHotSpotIDs:Handle;theIndex:UInt32):UInt32;
+type
+ UInt32Array=array[0..0] of UInt32; //could also say "array of UInt32", but keeping for backwards compatibility
+var
+ mySize:Size;
+ myID:UInt32;
+ myIDPtr:^UInt32Array;
 begin
-(*
-	Size			mySize;
-	UInt32			myID := kInvalidHotSpotID;
-	UInt32			*myIDPtr;
+  myID := kInvalidHotSpotID;
 
 	// make sure the instance and hot spot list are non-nil
 	if ((theInstance = nil) or (theHotSpotIDs = nil)) then
-		begin result:=(myID); exit; end;
+		begin
+    result:=myID;
+    exit;
+    end;
 
 	// make sure that the index is valid
 	mySize := GetHandleSize(theHotSpotIDs);
 	if (theIndex >= (mySize / sizeof(UInt32))) then
-		begin result:=(myID); exit; end;
+		begin
+    result:=myID;
+    exit;
+    end;
 
-	myIDPtr := (UInt32 * )*theHotSpotIDs;
+	myIDPtr := @theHotSpotIDs;
 	myID := myIDPtr[theIndex];
-	result:=(myID);
-*)
+	result:=myID;
 end;
 
 
@@ -1339,22 +1362,19 @@ end;
 //
 //////////
 
-function GetHotSpotType(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotID:UInt32;theHotSpotType:OSType):OSErr;
+function GetHotSpotType(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotID:UInt32;var theHotSpotType:OSType):OSErr;
+var
+ myHotSpotAtomData:QTVRHotSpotInfoAtom;
+ myErr:OSErr;
 begin
-(*
-	QTVRHotSpotInfoAtom		myHotSpotAtomData;
-	OSErr					myErr := noErr;
+ // get the hot spot information atom data
+ myErr := GetHotSpotAtomData(theInstance, theNodeID, theHotSpotID, @myHotSpotAtomData);
+ if (myErr = noErr) then
+  theHotSpotType := EndianU32_BtoN(myHotSpotAtomData.hotSpotType) // return the hot spot type
+ else // make sure we always return some meaningful value
+  theHotSpotType := kQTVRHotSpotUndefinedType;
 
-	// make sure we always return some meaningful value
-	*theHotSpotType := kQTVRHotSpotUndefinedType;
-
-	// get the hot spot information atom data
-	myErr := GetHotSpotAtomData(theInstance, theNodeID, theHotSpotID, &myHotSpotAtomData);
-	if (myErr = noErr)
-		*theHotSpotType := EndianU32_BtoN(myHotSpotAtomData.hotSpotType);		// return the hot spot type
-
-	result:=(myErr);
-*)
+ result:=(myErr);
 end;
 
 
@@ -1367,25 +1387,29 @@ end;
 //////////
 
 function GetHotSpotName(theInstance:QTVRInstance;theNodeID:UInt32;theHotSpotID:UInt32):PChar;
+var
+	myHotSpotAtomData:QTVRHotSpotInfoAtom;
+  myHotSpotName:PChar;
+  myErr:OSErr;
+  myNameAtomID:QTAtomID;
+  myNodeInfo:QTAtomContainer;
+  myHSParentAtom:QTAtom;
+  myHSAtom:QTAtom;
+  myNameAtom:QTAtom;
+  myParentAtom:QTAtom;
 begin
-(*
-	QTVRHotSpotInfoAtom		myHotSpotAtomData;
-	char					*myHotSpotName := nil;
-	OSErr					myErr := noErr;
+	myHotSpotName := nil;
 
 	// get the hot spot information atom data
-	myErr := GetHotSpotAtomData(theInstance, theNodeID, theHotSpotID, &myHotSpotAtomData);
-	if (myErr = noErr) begin
-		QTAtomID				myNameAtomID;
-
+	myErr := GetHotSpotAtomData(theInstance, theNodeID, theHotSpotID, @myHotSpotAtomData);
+	if (myErr = noErr) then
+    begin
 		// get the atom ID of the name string atom
 		myNameAtomID := EndianU32_BtoN(myHotSpotAtomData.nameAtomID);
 
-		if (myNameAtomID <> 0) begin
-			QTAtomContainer		myNodeInfo;
-			QTAtom				myHSParentAtom;
-			QTAtom				myHSAtom;
-			QTAtom				myNameAtom := 0;
+		if (myNameAtomID <> 0) then
+      begin
+			//myNameAtom := 0; //Birb: not used
 
 			// version 2.0 documentation says that the hot spot name is contained in a string atom
 			// that is a sibling of the hot spot atom (that is, a child of the hot spot parent atom);
@@ -1396,24 +1420,26 @@ begin
 			// Mea culpa!
 
 			// get the hot spot parent atom and the hot spot atom
-			myErr := QTVRGetNodeInfo(theInstance, theNodeID, &myNodeInfo);
-			if (myErr = noErr) begin
+			myErr := QTVRGetNodeInfo(theInstance, theNodeID, myNodeInfo);
+			if (myErr = noErr) then
+        begin
 				myHSParentAtom := QTFindChildByID(myNodeInfo, kParentAtomIsContainer, kQTVRHotSpotParentAtomType, 1, nil);
-				if (myHSParentAtom <> 0) begin
+				if (myHSParentAtom <> 0) then
+          begin
 					myHSAtom := QTFindChildByID(myNodeInfo, myHSParentAtom, kQTVRHotSpotAtomType, theHotSpotID, nil);
-					if (myHSAtom <> 0) begin
-						QTAtom	myParentAtom;
-
-						// look for a string atom that is a child of the hot spot atom
+					if (myHSAtom <> 0) then
+            begin
+            // look for a string atom that is a child of the hot spot atom
 						myParentAtom := myHSAtom;
 						myNameAtom := QTFindChildByID(myNodeInfo, myParentAtom, kQTVRStringAtomType, theHotSpotID, nil);
-						if (myNameAtom = 0) begin
+						if (myNameAtom = 0) then
+              begin
 							// no such atom in the hot spot atom; look in the hot spot parent atom
 							myParentAtom := myHSParentAtom;
 							myNameAtom := QTFindChildByID(myNodeInfo, myParentAtom, kQTVRStringAtomType, theHotSpotID, nil);
-						end;
+   						end;
 
-						if (myNameAtom <> 0)
+						if (myNameAtom <> 0) then
 							myHotSpotName := GetStringFromAtom(myNodeInfo, myParentAtom, myNameAtomID);
 					end;
 				end;
@@ -1424,7 +1450,6 @@ begin
 	end;
 
 	result:=(myHotSpotName);
-*)
 end;
 
 
@@ -1488,6 +1513,22 @@ begin
  result:=(myTilt);
 end;
 
+//////////
+//
+// QTVRUtils_PanAngleToPoint3D
+// Return a unit vector for a given QTVR pan angle.
+//
+// The pan angle is expected to be in radians.
+// 
+//////////
+
+procedure PanAngleToPoint3D(thePanAngle:float; var theX,theZ:float);
+begin
+ // sin and cos are continuous functions and have no limits on input range;
+ // output range is always -1..1
+ theX := sin(thePanAngle);
+ theZ := -cos(thePanAngle);
+end;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

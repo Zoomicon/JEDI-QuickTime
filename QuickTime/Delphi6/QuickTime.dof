@@ -62,7 +62,7 @@ AutoIncBuild=1
 MajorVer=2
 MinorVer=0
 Release=0
-Build=70
+Build=72
 Debug=0
 PreRelease=0
 Special=0
@@ -73,7 +73,7 @@ CodePage=1253
 [Version Info Keys]
 CompanyName=George Birbilis
 FileDescription=QuickTime API headers
-FileVersion=2.0.0.70
+FileVersion=2.0.0.72
 InternalName=QuickTime
 LegalCopyright=(C)1998-2000 George Birbilis
 LegalTrademarks=QuickTime, Apple Computer, Inc.
