@@ -1,0 +1,75 @@
+package QuickTime;
+
+{$R *.RES}
+{$ALIGN ON}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $00400000}
+{$DESCRIPTION 'JEDI QuickTime'}
+{$IMPLICITBUILD ON}
+
+requires
+  vcl40;
+
+contains
+  qt_StandardFile in '..\source\qt_StandardFile.pas',
+  qt_Components in '..\source\qt_Components.pas',
+  qt_Endian in '..\source\qt_Endian.pas',
+  qt_Errors in '..\source\qt_Errors.pas',
+  qt_Events in '..\source\qt_Events.pas',
+  qt_Files in '..\source\qt_Files.pas',
+  qt_Gestalt in '..\source\qt_Gestalt.pas',
+  qt_ImageCompression in '..\source\qt_ImageCompression.pas',
+  qt_MacMemory in '..\source\qt_MacMemory.pas',
+  qt_MacTypes in '..\source\qt_MacTypes.pas',
+  qt_MacWindows in '..\source\qt_MacWindows.pas',
+  qt_MixedMode in '..\source\qt_MixedMode.pas',
+  qt_Movies in '..\source\qt_Movies.pas',
+  qt_Printing in '..\source\qt_Printing.pas',
+  qt_QD3D in '..\source\qt_QD3D.pas',
+  qt_QD3DCamera in '..\source\qt_QD3DCamera.pas',
+  qt_QD3DDrawContext in '..\source\qt_QD3DDrawContext.pas',
+  qt_QD3DGeometry in '..\source\qt_QD3DGeometry.pas',
+  qt_QD3DGroup in '..\source\qt_QD3DGroup.pas',
+  qt_QD3DLight in '..\source\qt_QD3DLight.pas',
+  qt_QD3DMath in '..\source\qt_QD3DMath.pas',
+  qt_QD3DRenderer in '..\source\qt_QD3DRenderer.pas',
+  qt_QD3DSet in '..\source\qt_QD3DSet.pas',
+  qt_QD3DShader in '..\source\qt_QD3DShader.pas',
+  qt_QD3DStyle in '..\source\qt_QD3DStyle.pas',
+  qt_QD3DTransform in '..\source\qt_QD3DTransform.pas',
+  qt_QD3DView in '..\source\qt_QD3DView.pas',
+  qt_QDOffscreen in '..\source\qt_QDOffscreen.pas',
+  qt_QTML in '..\source\qt_QTML.pas',
+  qt_QuickDraw in '..\source\qt_QuickDraw.pas',
+  qt_QuickTimeComponents in '..\source\qt_QuickTimeComponents.pas',
+  qt_QuickTimeMusic in '..\source\qt_QuickTimeMusic.pas',
+  qt_QuickTimeVR in '..\source\qt_QuickTimeVR.pas',
+  qt_QuickTimeVRFormat in '..\source\qt_QuickTimeVRFormat.pas',
+  qt_Script in '..\source\qt_Script.pas',
+  qt_Sound in '..\source\qt_Sound.pas',
+  C_Types in '..\source\C_Types.pas',
+  qt_OSUtils in '..\source\qt_OSUtils.pas',
+  qt_Aliases in '..\source\qt_Aliases.pas',
+  qt_FixMath in '..\source\qt_FixMath.pas',
+  qt_Finder in '..\source\qt_Finder.pas',
+  qt_QD3DAcceleration in '..\source\qt_QD3DAcceleration.pas';
+
+end.

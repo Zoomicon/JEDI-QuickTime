@@ -1,0 +1,104 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{a4d28a60-2cda-4f58-b2f0-db76087259c3}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="..\QuickTimeComponents\Delphi11\JEDI_QuickTimeComponents.dproj" />
+    <Projects Include="..\QuickTimeComponents\Delphi11\JEDI_QuickTimeComponentsDesign.dproj" />
+    <Projects Include="..\QuickTimeDemos\QuickTimeComponents_Demo\JQTComponents_Demo.dproj" />
+    <Projects Include="..\QuickTimeDemos\QuickTime_SimplePlayer\QuickTime_SimplePlayer.dproj" />
+    <Projects Include="..\QuickTimeDemos\QuickTime_Sound\QTSoundDemo.dproj" />
+    <Projects Include="..\QuickTimeDemos\QuickTime_VDIGorg_tests\GrabFrameNoPreview\GrabFrameNoPreview.dproj" />
+    <Projects Include="..\QuickTimeUtilities\Delphi11\JEDI_QuickTimeUtilities.dproj" />
+    <Projects Include="..\QuickTime\Delphi11\QuickTime.dproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="QuickTime">
+    <MSBuild Projects="..\QuickTime\Delphi11\QuickTime.dproj" Targets="" />
+  </Target>
+  <Target Name="QuickTime:Clean">
+    <MSBuild Projects="..\QuickTime\Delphi11\QuickTime.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="QuickTime:Make">
+    <MSBuild Projects="..\QuickTime\Delphi11\QuickTime.dproj" Targets="Make" />
+  </Target>
+  <Target Name="JEDI_QuickTimeUtilities">
+    <MSBuild Projects="..\QuickTimeUtilities\Delphi11\JEDI_QuickTimeUtilities.dproj" Targets="" />
+  </Target>
+  <Target Name="JEDI_QuickTimeUtilities:Clean">
+    <MSBuild Projects="..\QuickTimeUtilities\Delphi11\JEDI_QuickTimeUtilities.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="JEDI_QuickTimeUtilities:Make">
+    <MSBuild Projects="..\QuickTimeUtilities\Delphi11\JEDI_QuickTimeUtilities.dproj" Targets="Make" />
+  </Target>
+  <Target Name="JEDI_QuickTimeComponents">
+    <MSBuild Projects="..\QuickTimeComponents\Delphi11\JEDI_QuickTimeComponents.dproj" Targets="" />
+  </Target>
+  <Target Name="JEDI_QuickTimeComponents:Clean">
+    <MSBuild Projects="..\QuickTimeComponents\Delphi11\JEDI_QuickTimeComponents.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="JEDI_QuickTimeComponents:Make">
+    <MSBuild Projects="..\QuickTimeComponents\Delphi11\JEDI_QuickTimeComponents.dproj" Targets="Make" />
+  </Target>
+  <Target Name="JEDI_QuickTimeComponentsDesign">
+    <MSBuild Projects="..\QuickTimeComponents\Delphi11\JEDI_QuickTimeComponentsDesign.dproj" Targets="" />
+  </Target>
+  <Target Name="JEDI_QuickTimeComponentsDesign:Clean">
+    <MSBuild Projects="..\QuickTimeComponents\Delphi11\JEDI_QuickTimeComponentsDesign.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="JEDI_QuickTimeComponentsDesign:Make">
+    <MSBuild Projects="..\QuickTimeComponents\Delphi11\JEDI_QuickTimeComponentsDesign.dproj" Targets="Make" />
+  </Target>
+  <Target Name="QuickTime_SimplePlayer">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_SimplePlayer\QuickTime_SimplePlayer.dproj" Targets="" />
+  </Target>
+  <Target Name="QuickTime_SimplePlayer:Clean">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_SimplePlayer\QuickTime_SimplePlayer.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="QuickTime_SimplePlayer:Make">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_SimplePlayer\QuickTime_SimplePlayer.dproj" Targets="Make" />
+  </Target>
+  <Target Name="GrabFrameNoPreview">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_VDIGorg_tests\GrabFrameNoPreview\GrabFrameNoPreview.dproj" Targets="" />
+  </Target>
+  <Target Name="GrabFrameNoPreview:Clean">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_VDIGorg_tests\GrabFrameNoPreview\GrabFrameNoPreview.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="GrabFrameNoPreview:Make">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_VDIGorg_tests\GrabFrameNoPreview\GrabFrameNoPreview.dproj" Targets="Make" />
+  </Target>
+  <Target Name="QTSoundDemo">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_Sound\QTSoundDemo.dproj" Targets="" />
+  </Target>
+  <Target Name="QTSoundDemo:Clean">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_Sound\QTSoundDemo.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="QTSoundDemo:Make">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTime_Sound\QTSoundDemo.dproj" Targets="Make" />
+  </Target>
+  <Target Name="JQTComponents_Demo">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTimeComponents_Demo\JQTComponents_Demo.dproj" Targets="" />
+  </Target>
+  <Target Name="JQTComponents_Demo:Clean">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTimeComponents_Demo\JQTComponents_Demo.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="JQTComponents_Demo:Make">
+    <MSBuild Projects="..\QuickTimeDemos\QuickTimeComponents_Demo\JQTComponents_Demo.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="QuickTime;JEDI_QuickTimeUtilities;JEDI_QuickTimeComponents;JEDI_QuickTimeComponentsDesign;QuickTime_SimplePlayer;GrabFrameNoPreview;QTSoundDemo;JQTComponents_Demo" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="QuickTime:Clean;JEDI_QuickTimeUtilities:Clean;JEDI_QuickTimeComponents:Clean;JEDI_QuickTimeComponentsDesign:Clean;QuickTime_SimplePlayer:Clean;GrabFrameNoPreview:Clean;QTSoundDemo:Clean;JQTComponents_Demo:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="QuickTime:Make;JEDI_QuickTimeUtilities:Make;JEDI_QuickTimeComponents:Make;JEDI_QuickTimeComponentsDesign:Make;QuickTime_SimplePlayer:Make;GrabFrameNoPreview:Make;QTSoundDemo:Make;JQTComponents_Demo:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

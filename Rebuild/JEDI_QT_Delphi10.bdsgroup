@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <PersonalityInfo>
+    <Option>
+      <Option Name="Personality">Default.Personality</Option>
+      <Option Name="ProjectType"></Option>
+      <Option Name="Version">1.0</Option>
+      <Option Name="GUID">{18B2A422-F867-48F5-8DB8-FC6BC00D4054}</Option>
+    </Option>
+  </PersonalityInfo>
+  <Default.Personality>
+    
+    <Projects>
+      <Projects Name="QuickTime.bpl">..\QuickTime\Delphi10\QuickTime.bdsproj</Projects>
+      <Projects Name="JEDI_QuickTimeUtilities.bpl">..\QuickTimeUtilities\Delphi10\JEDI_QuickTimeUtilities.bdsproj</Projects>
+      <Projects Name="JEDI_QuickTimeComponents.bpl">..\QuickTimeComponents\Delphi10\JEDI_QuickTimeComponents.bdsproj</Projects>
+      <Projects Name="JEDI_QuickTimeComponentsDesign.bpl">..\QuickTimeComponents\Delphi10\JEDI_QuickTimeComponentsDesign.bdsproj</Projects>
+      <Projects Name="QuickTime_SimplePlayer.exe">..\QuickTimeDemos\QuickTime_SimplePlayer\QuickTime_SimplePlayer.bdsproj</Projects>
+      <Projects Name="GrabFrameNoPreview.exe">..\QuickTimeDemos\QuickTime_VDIGorg_tests\GrabFrameNoPreview\GrabFrameNoPreview.bdsproj</Projects>
+      <Projects Name="QTSoundDemo.exe">..\QuickTimeDemos\QuickTime_Sound\QTSoundDemo.bdsproj</Projects>
+      <Projects Name="JQTComponents_Demo.exe">..\QuickTimeDemos\QuickTimeComponents_Demo\JQTComponents_Demo.bdsproj</Projects>
+      <Projects Name="Targets">QuickTime.bpl JEDI_QuickTimeUtilities.bpl JEDI_QuickTimeComponents.bpl JEDI_QuickTimeComponentsDesign.bpl QuickTime_SimplePlayer.exe GrabFrameNoPreview.exe QTSoundDemo.exe JQTComponents_Demo.exe</Projects>
+    </Projects>
+    <Dependencies/>
+  </Default.Personality>
+</BorlandProject>

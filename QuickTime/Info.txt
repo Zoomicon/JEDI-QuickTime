@@ -1,0 +1,326 @@
+[API]
+Name=QuickTime
+Version=5.0
+Date=17 Aug 2002
+Originated=QuickTime SDK
+URL=http://developer.apple.com/quicktime/
+Description=Interface for the Apple QuickTime API
+
+[CONVERSION]
+FileName=qt_Components.pas
+FileDate=21 Jan 2001
+Status=WORK-IN-PROGRESS
+Version=20010121
+LastModify=21 Jan 2001
+OriginalFile=Components.h
+
+FileName=qt_Endian.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=Endian.h
+
+FileName=qt_Errors.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=Errors.h
+
+FileName=qt_Events.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=Errors.h
+
+FileName=qt_Files.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=Files.h
+
+FileName=qt_Gestalt.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=Gestalt.h
+
+FileName=qt_ImageCompression.pas
+FileDate=26 Jun 2002
+Status=WORK-IN-PROGRESS
+Version=20020626
+LastModify=26 Jun 2002
+OriginalFile=ImageCompression.h
+
+FileName=qt_MacMemory.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=MacMemory.h
+
+FileName=qt_MacTypes.pas
+FileDate=06 Jul 2002
+Status=WORK-IN-PROGRESS
+Version=20020706
+LastModify=06 Jul 2002
+OriginalFile=MacTypes.h
+
+FileName=qt_MacWindows.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=MacWindows.h
+
+FileName=qt_Movies.pas
+FileDate=16 Oct 2002
+Status=WORK-IN-PROGRESS
+Version=20021016
+LastModify=16 Oct 2002
+OriginalFile=Movies.h
+
+FileName=qt_ODOffscreen.pas
+FileDate=14 May 2000
+Status=READY-FOR-TESTING
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=ODOffscreen.h
+
+FileName=qt_Printing.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=Priting.h
+
+FileName=qt_QD3D.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3D.h
+
+FileName=qt_QD3DAcceleration.pas
+FileDate=14 May 2000
+Status=READY-FOR-TESTING
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DAcceleration.h
+
+FileName=qt_QD3DCamera.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DCamera.h
+
+FileName=qt_QD3DDrawContext.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DDrawContext.h
+
+FileName=qt_QD3DGeometry.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DGeometry.h
+
+FileName=qt_QD3DGroup.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DGroup.h
+
+FileName=qt_QD3DLight.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DLight.h
+
+FileName=qt_QD3DMath.pas
+FileDate=14 May 2000
+Status=READY-FOR-TESTING
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DMath.h
+
+FileName=qt_QD3DRenderer.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DRenderer.h
+
+FileName=qt_QD3DSet.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DSet.h
+
+FileName=qt_QD3DShader.pas
+FileDate=14 May 2000
+Status=READY-FOR-TESTING
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DShader.h
+
+FileName=qt_QD3DStyle.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DStyle.h
+
+FileName=qt_QD3DTransform.pas
+FileDate=14 May 2000
+Status=READY-FOR-TESTING
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DTransform.h
+
+FileName=qt_QD3DView.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QD3DView.h
+
+FileName=qt_QTML.pas
+FileDate=15 Feb 2002
+Status=READY-FOR-TESTING
+Version=20020215
+LastModify=15 Feb 2002
+OriginalFile=QTML.h
+
+FileName=qt_QuickDraw.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QuickDraw.h
+
+FileName=qt_QuickTimeMusic.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QuickTimeMusic.h
+
+FileName=qt_QuickTimeVR.pas
+FileDate=08 Nov 2001
+Status=WORK-IN-PROGRESS
+Version=20011108
+LastModify=08 Nov 2001
+OriginalFile=QuickTimeVR.h
+
+FileName=qt_QuickTimeVRFormat.pas
+FileDate=14 May 2000
+Status=READY-FOR-TESTING
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=QuickTimeVRFormat.h
+
+FileName=qt_Script.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=Script.h
+
+FileName=qt_Sound.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=Sound.h
+
+FileName=qt_StandardFile.pas
+FileDate=14 May 2000
+Status=WORK-IN-PROGRESS
+Version=20000514
+LastModify=14 May 2000
+OriginalFile=StandardFile.h
+
+FileName=qt_Aliases.pas
+FileDate=15 Feb 2002
+Status=WORK-IN-PROGRESS
+Version=20020215
+LastModify=15 Feb 2002
+OriginalFile=Aliases.h
+
+FileName=qt_OSUtils.pas
+FileDate=15 Feb 2002
+Status=WORK-IN-PROGRESS
+Version=20020215
+LastModify=15 Feb 2002
+OriginalFile=OSUtils.h
+
+FileName=qt_FixMath.pas
+FileDate=21 May 2002
+Status=WORK-IN-PROGRESS
+Version=20020521
+LastModify=21 May 2002
+OriginalFile=FixMath.h
+
+FileName=qt_Finder.pas
+FileDate=23 May 2002
+Status=WORK-IN-PROGRESS
+Version=20020523
+LastModify=23 May 2002
+OriginalFile=Finder.h
+
+FileName=qt_QuickTimeComponents.pas
+FileDate=17 Aug 2002
+Status=WORK-IN-PROGRESS
+Version=20020817
+LastModify=17 Aug 2002
+OriginalFile=QuickTimeComponents.h
+
+FileName=qt_MixedMode.pas
+FileDate=02 Feb 2002
+Status=WORK-IN-PROGRESS
+Version=20020202
+LastModify=02 Feb 2002
+OriginalFile=MixedMode.h
+
+FileName=qt_QDOffscreen.pas
+FileDate=21 Jan 2002
+Status=WORK-IN-PROGRESS
+Version=20020121
+LastModify=21 Jan 2002
+OriginalFile=QDOffscreen.h
+
+[Platform]
+Win31=NO
+Win95=YES
+Win98=YES
+Win2000=YES
+WinXP=YES
+WinNT3=UNKNOWN
+WinNT4=YES
+
+[Requirements]
+Req1=Requires QuickTime 3.0 or higher
+
+[Captain]
+Name=George Birbilis
+Email=birbilis@kagi.com
+
+[Converters]
+Converter1=<George Birbilis;birbilis@kagi.com;http://members.fortunecity.com/birbilis/QT4Delphi>
+Converter2=<Phil Taylor;aar09@pop.dial.pipex.com;> 
+
+[Testers]
+Name=Phil Taylor
+Email=aar09@pop.dial.pipex.com

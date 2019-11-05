@@ -1,0 +1,44 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = QuickTime.bpl JEDI_QuickTimeUtilities.bpl \
+  JEDI_QuickTimeComponents.bpl JEDI_QuickTimeComponentsDesign.bpl \
+  QuickTime_SimplePlayer.exe GrabFrameNoPreview.exe QTSoundDemo.exe \
+  JQTComponents_Demo.exe
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+QuickTime.bpl: ..\QuickTime\Delphi7\QuickTime.dpk
+  $(DCC)
+
+JEDI_QuickTimeUtilities.bpl: ..\QuickTimeUtilities\Delphi7\JEDI_QuickTimeUtilities.dpk
+  $(DCC)
+
+JEDI_QuickTimeComponents.bpl: ..\QuickTimeComponents\Delphi7\JEDI_QuickTimeComponents.dpk
+  $(DCC)
+
+QuickTime_SimplePlayer.exe: ..\QuickTimeDemos\QuickTime_SimplePlayer\QuickTime_SimplePlayer.dpr
+  $(DCC)
+
+GrabFrameNoPreview.exe: ..\QuickTimeDemos\QuickTime_VDIGorg_tests\GrabFrameNoPreview\GrabFrameNoPreview.dpr
+  $(DCC)
+
+QTSoundDemo.exe: ..\QuickTimeDemos\QuickTime_Sound\QTSoundDemo.dpr
+  $(DCC)
+
+JQTComponents_Demo.exe: ..\QuickTimeDemos\QuickTimeComponents_Demo\JQTComponents_Demo.dpr
+  $(DCC)
+
+JEDI_QuickTimeComponentsDesign.bpl: ..\QuickTimeComponents\Delphi7\JEDI_QuickTimeComponentsDesign.dpk
+  $(DCC)
+
+

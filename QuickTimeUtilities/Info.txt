@@ -1,0 +1,77 @@
+[API]
+Name=QuickTime
+Version=3.0
+Date=
+Originated=QuickTime Sample code
+URL=http://developer.apple.com/samplecode/Sample_Code/QuickTime.htm
+Description=
+
+[CONVERSION]
+FileName=Box3DSupport.pas
+FileDate=06 Jan 1995
+Status=WORK-IN-PROGRESS
+Version=20000610
+LastModify=10 Jun 2000
+OriginalFile=Box3DSupport.c
+
+FileName=QTime.pas
+FileDate=10 Jun 2000
+Status=WORK-IN-PROGRESS
+Version=20000610
+LastModify=10 Jun 2000
+OriginalFile=QTime.c
+
+FileName=QTUtils.pas
+FileDate=28 Feb 1998
+Status=WORK-IN-PROGRESS
+Version=20000610
+LastModify=10 Jun 2000
+OriginalFile=QTUtils.c
+
+FileName=QTVRUtils.pas
+FileDate=12 Feb 1998
+Status=WORK-IN-PROGRESS
+Version=20000610
+LastModify=10 Jun 2000
+OriginalFile=QTVRUtils.c
+
+FileName=JEDI_QuickTime_Utils.pas
+FileDate=23 Feb 2002
+Status=WORK-IN-PROGRESS
+Version=20020223
+LastModify=23 Feb 2002
+OriginalFile=JEDI_QuickTime_Utils.pas
+
+FileName=QTURL.pas
+FileDate=21 May 2002
+Status=WORK-IN-PROGRESS
+Version=20020521
+LastModify=21 May 2002
+OriginalFile=QTMovieFromURL.c
+
+FileName=QTStep.pas
+FileDate=21 May 2002
+Status=WORK-IN-PROGRESS
+Version=20020521
+LastModify=21 May 2002
+OriginalFile=QTFrameStepper.c
+
+[Platform]
+Win31=NO
+Win95=YES
+Win98=YES
+Win2000=YES
+WinNT3=UNKNOWN
+WinNT4=YES
+
+[Requirements]
+Req1=Requires QuickTime 3.0 or higher
+
+[Captain]
+Name=George Birbilis
+Email=birbilis@kagi.com
+
+[Converters]
+Converter1=<George Birbilis;birbilis@kagi.com;http://members.fortunecity.com/birbilis/QT4Delphi> 
+
+[Testers]

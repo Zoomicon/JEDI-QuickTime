@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{91b4d0de-6852-4cae-8282-54df6474e552}</ProjectGuid>
+    <MainSource>QuickTime.dpk</MainSource>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>output\QuickTime.bpl</DCC_DependencyCheckOutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_ExeOutput>$(DELPHI)\Delphi5</DCC_ExeOutput>
+    <DCC_DcuOutput>output</DCC_DcuOutput>
+    <DCC_ObjOutput>output</DCC_ObjOutput>
+    <DCC_HppOutput>output</DCC_HppOutput>
+    <DCC_BplOutput>output</DCC_BplOutput>
+    <DCC_DcpOutput>output</DCC_DcpOutput>
+    <DCC_UnitSearchPath>..\source</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\source</DCC_ResourcePath>
+    <DCC_ObjPath>..\source</DCC_ObjPath>
+    <DCC_IncludePath>..\source</DCC_IncludePath>
+    <DCC_Define>RELEASE</DCC_Define>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_ExeOutput>$(DELPHI)\Delphi5</DCC_ExeOutput>
+    <DCC_DcuOutput>output</DCC_DcuOutput>
+    <DCC_ObjOutput>output</DCC_ObjOutput>
+    <DCC_HppOutput>output</DCC_HppOutput>
+    <DCC_BplOutput>output</DCC_BplOutput>
+    <DCC_DcpOutput>output</DCC_DcpOutput>
+    <DCC_UnitSearchPath>..\source</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\source</DCC_ResourcePath>
+    <DCC_ObjPath>..\source</DCC_ObjPath>
+    <DCC_IncludePath>..\source</DCC_IncludePath>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType>Package</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject><Delphi.Personality><Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Package_Options><Package_Options Name="PackageDescription">JEDI QuickTime</Package_Options><Package_Options Name="ImplicitBuild">True</Package_Options><Package_Options Name="DesigntimeOnly">False</Package_Options><Package_Options Name="RuntimeOnly">False</Package_Options></Package_Options><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">True</VersionInfo><VersionInfo Name="MajorVer">2</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">75</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1032</VersionInfo><VersionInfo Name="CodePage">1253</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName">George Birbilis</VersionInfoKeys><VersionInfoKeys Name="FileDescription">QuickTime API headers</VersionInfoKeys><VersionInfoKeys Name="FileVersion">2.0.0.75</VersionInfoKeys><VersionInfoKeys Name="InternalName">QuickTime</VersionInfoKeys><VersionInfoKeys Name="LegalCopyright">(C)1998-2000 George Birbilis</VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks">QuickTime, Apple Computer, Inc.</VersionInfoKeys><VersionInfoKeys Name="OriginalFilename">QuickTime.dpk</VersionInfoKeys><VersionInfoKeys Name="ProductName">QuickTime</VersionInfoKeys><VersionInfoKeys Name="ProductVersion">3.0</VersionInfoKeys><VersionInfoKeys Name="Comments">open-sourced at Delphi-JEDI</VersionInfoKeys></VersionInfoKeys><Source><Source Name="MainSource">QuickTime.dpk</Source></Source></Delphi.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+  <ItemGroup>
+    <DelphiCompile Include="QuickTime.dpk">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="..\..\Rebuild\vcl.dcp" />
+    <DCCReference Include="..\source\C_Types.pas" />
+    <DCCReference Include="..\source\qt_Aliases.pas" />
+    <DCCReference Include="..\source\qt_Components.pas" />
+    <DCCReference Include="..\source\qt_Endian.pas" />
+    <DCCReference Include="..\source\qt_Errors.pas" />
+    <DCCReference Include="..\source\qt_Events.pas" />
+    <DCCReference Include="..\source\qt_Files.pas" />
+    <DCCReference Include="..\source\qt_Finder.pas" />
+    <DCCReference Include="..\source\qt_FixMath.pas" />
+    <DCCReference Include="..\source\qt_Gestalt.pas" />
+    <DCCReference Include="..\source\qt_ImageCompression.pas" />
+    <DCCReference Include="..\source\qt_MacMemory.pas" />
+    <DCCReference Include="..\source\qt_MacTypes.pas" />
+    <DCCReference Include="..\source\qt_MacWindows.pas" />
+    <DCCReference Include="..\source\qt_MixedMode.pas" />
+    <DCCReference Include="..\source\qt_Movies.pas" />
+    <DCCReference Include="..\source\qt_OSUtils.pas" />
+    <DCCReference Include="..\source\qt_Printing.pas" />
+    <DCCReference Include="..\source\qt_QD3D.pas" />
+    <DCCReference Include="..\source\qt_QD3DAcceleration.pas" />
+    <DCCReference Include="..\source\qt_QD3DCamera.pas" />
+    <DCCReference Include="..\source\qt_QD3DDrawContext.pas" />
+    <DCCReference Include="..\source\qt_QD3DGeometry.pas" />
+    <DCCReference Include="..\source\qt_QD3DGroup.pas" />
+    <DCCReference Include="..\source\qt_QD3DLight.pas" />
+    <DCCReference Include="..\source\qt_QD3DMath.pas" />
+    <DCCReference Include="..\source\qt_QD3DRenderer.pas" />
+    <DCCReference Include="..\source\qt_QD3DSet.pas" />
+    <DCCReference Include="..\source\qt_QD3DShader.pas" />
+    <DCCReference Include="..\source\qt_QD3DStyle.pas" />
+    <DCCReference Include="..\source\qt_QD3DTransform.pas" />
+    <DCCReference Include="..\source\qt_QD3DView.pas" />
+    <DCCReference Include="..\source\qt_QDOffscreen.pas" />
+    <DCCReference Include="..\source\qt_QTML.pas" />
+    <DCCReference Include="..\source\qt_QuickDraw.pas" />
+    <DCCReference Include="..\source\qt_QuickTimeComponents.pas" />
+    <DCCReference Include="..\source\qt_QuickTimeMusic.pas" />
+    <DCCReference Include="..\source\qt_QuickTimeVR.pas" />
+    <DCCReference Include="..\source\qt_QuickTimeVRFormat.pas" />
+    <DCCReference Include="..\source\qt_Script.pas" />
+    <DCCReference Include="..\source\qt_Sound.pas" />
+    <DCCReference Include="..\source\qt_StandardFile.pas" />
+  </ItemGroup>
+</Project>

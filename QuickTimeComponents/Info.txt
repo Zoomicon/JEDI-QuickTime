@@ -1,0 +1,11 @@
+[Requirements]
+Req1=Requires QuickTime 3.0 or higher
+Req2=Requires QuickTime package
+
+[Captain]
+Name=George Birbilis
+Email=birbilis@kagi.com
+
+[Converters]
+Converter1=<George Birbilis;birbilis@kagi.com;http://members.fortunecity.com/birbilis/QT4Delphi>
+Converter2=<Vaclav Krmela;krmela@ustinadorlici.cz;www.rdgsw.cz> 
